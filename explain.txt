@@ -1,0 +1,5 @@
+/var/www/html/ERPGO_SAAS_8/laravel8auth/storage/app/public
+PHASE 2 changes:
+    1)  if the payslip date greater than termination date then the payslip will not generate & vice verca but when the termination updated  like  termination date small than the payslip generate date after updation  it still show in pyroll.
+    2) what is an active list ? 
+    3)in currency setting . and , used   . for thousand separator and , for 00 like 71.503,00 = 71503
