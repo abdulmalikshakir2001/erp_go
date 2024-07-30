@@ -38,18 +38,18 @@ class AwardTypeController extends Controller
         if(\Auth::user()->can('create award type'))
         {
 
-            $validator = \Validator::make(
-                $request->all(), [
+            // $validator = \Validator::make(
+            //     $request->all(), [
 
-                                   'name' => 'required|max:20',
-                               ]
-            );
-            if($validator->fails())
-            {
-                $messages = $validator->getMessageBag();
+            //                        'name' => 'required|max:20',
+            //                    ]
+            // );
+            // if($validator->fails())
+            // {
+            //     $messages = $validator->getMessageBag();
 
-                return redirect()->back()->with('error', $messages->first());
-            }
+            //     return redirect()->back()->with('error', $messages->first());
+            // }
 
             $awardtype             = new AwardType();
             $awardtype->name       = $request->name;
@@ -95,18 +95,18 @@ class AwardTypeController extends Controller
         {
             if($awardtype->created_by == \Auth::user()->creatorId())
             {
-                $validator = \Validator::make(
-                    $request->all(), [
+                // $validator = \Validator::make(
+                //     $request->all(), [
 
-                                       'name' => 'required|max:20',
-                                   ]
-                );
-                if($validator->fails())
-                {
-                    $messages = $validator->getMessageBag();
+                //                        'name' => 'required|max:20',
+                //                    ]
+                // );
+                // if($validator->fails())
+                // {
+                //     $messages = $validator->getMessageBag();
 
-                    return redirect()->back()->with('error', $messages->first());
-                }
+                //     return redirect()->back()->with('error', $messages->first());
+                // }
 
                 $awardtype->name = $request->name;
                 $awardtype->save();
