@@ -13,13 +13,17 @@ class Travel extends Model
         'start_date',
         'end_date',
         'purpose_of_visit',
-        'place_of_visit',
+        'country',    // Used for international trips
+        'state',             // Used for local trips
+        'origin',            // Used for local trips
+        'destination',       // Used for local trips
         'description',
         'created_by',
     ];
 
     public function employee()
     {
-        return $this->hasOne('App\Models\Employee', 'id', 'employee_id');
+        return $this->belongsTo('App\Models\Employee', 'employee_id');
     }
 }
+

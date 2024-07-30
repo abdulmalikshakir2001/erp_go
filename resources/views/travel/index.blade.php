@@ -50,7 +50,7 @@
                                     <td>{{ \Auth::user()->dateFormat( $travel->start_date) }}</td>
                                     <td>{{ \Auth::user()->dateFormat( $travel->end_date) }}</td>
                                     <td>{{ $travel->purpose_of_visit }}</td>
-                                    <td>{{ $travel->place_of_visit }}</td>
+                                    <td>{{ $travel->country }}</td>
                                     <td>{{ $travel->description }}</td>
                                     @if(Gate::check('edit travel') || Gate::check('delete travel'))
                                         <td>
