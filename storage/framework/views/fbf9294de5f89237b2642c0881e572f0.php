@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e(__('Manage Trip')); ?>
 
@@ -49,7 +51,7 @@
                                     <td><?php echo e(\Auth::user()->dateFormat( $travel->start_date)); ?></td>
                                     <td><?php echo e(\Auth::user()->dateFormat( $travel->end_date)); ?></td>
                                     <td><?php echo e($travel->purpose_of_visit); ?></td>
-                                    <td><?php echo e($travel->place_of_visit); ?></td>
+                                    <td><?php echo e($travel->country); ?></td>
                                     <td><?php echo e($travel->description); ?></td>
                                     <?php if(Gate::check('edit travel') || Gate::check('delete travel')): ?>
                                         <td>
