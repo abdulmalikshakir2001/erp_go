@@ -7,5 +7,10 @@
 /storage/logs/*.*
 /vendor
 composer.lock
+/storage/framework/sessions/
+/storage/framework/views/
+/storage/uploads/sample/
+/storage/framework/
+
 
 
