@@ -19,7 +19,10 @@ class CreateTravelsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('purpose_of_visit')->nullable();
-            $table->string('place_of_visit')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('origin')->nullable();
+            $table->string('destination')->nullable();
             $table->string('description')->nullable();
             $table->string('created_by');
             $table->timestamps();

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 
+
 class TravelController extends Controller
 {
     public function index()
@@ -50,61 +51,68 @@ class TravelController extends Controller
 
     public function store(Request $request)
     {
-        if(\Auth::user()->can('create travel'))
-        {
+        if (\Auth::user()->can('create travel')) {
             $validator = \Validator::make(
                 $request->all(), [
-                                   'employee_id' => 'required',
-                                   'start_date' => 'required',
-                                   'end_date' => 'required',
-                                   'purpose_of_visit' => 'required',
-                                   'place_of_visit' => 'required',
-                               ]
+                    'trip_type' => 'required|in:international,local',
+                    'employee_id' => 'required',
+                    'start_date' => 'date',
+                    'purpose_of_visit' => 'required|string',
+                    'end_date' => 'date|after_or_equal:start_date',
+                    'description' => 'nullable',
+                    'country' => 'required_if:trip_type,international',
+                    'state' => 'required_if:trip_type,local',
+                    'origin' => 'required_if:trip_type,local',
+                    'destination' => 'required_if:trip_type,local',
+                ]
             );
-            if($validator->fails())
-            {
+    
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
-
                 return redirect()->back()->with('error', $messages->first());
             }
-            $travel                   = new Travel();
-            $travel->employee_id      = $request->employee_id;
-            $travel->start_date       = $request->start_date;
-            $travel->end_date         = $request->end_date;
+    
+            $travel = new Travel();
+            $travel->employee_id = $request->employee_id;
+            $travel->start_date = $request->start_date;
+            $travel->end_date = $request->end_date;
+            $travel->description = $request->description;
             $travel->purpose_of_visit = $request->purpose_of_visit;
-            $travel->place_of_visit   = $request->place_of_visit;
-            $travel->description      = $request->description;
-            $travel->created_by       = \Auth::user()->creatorId();
-            $travel->save();
-
-            $setings = Utility::settings();
-            if($setings['trip_sent'] == 1)
-            {
-                $employee      = Employee::find($travel->employee_id);
-
-                $tripArr = [
-                    'trip_name'=>$employee->name,
-                    'purpose_of_visit' =>$travel->purpose_of_visit,
-                    'start_date'  =>$travel->start_date,
-                    'end_date'  =>$travel->end_date,
-                    'place_of_visit' =>$travel->place_of_visit,
-                    'trip_description' =>$travel->description,
-
-                ];
-
-                $resp = Utility::sendEmailTemplate('trip_sent', [$employee->id => $employee->email], $tripArr);
-
-                return redirect()->route('travel.index')->with('success', __('Travel  successfully created.'). ((!empty($resp) && $resp['is_success'] == false && !empty($resp['error'])) ? '<br> <span class="text-danger">' . $resp['error'] . '</span>' : ''));
-
-
+            $travel->created_by = \Auth::user()->creatorId();
+    
+            if ($request->trip_type == 'international') {
+                $travel->country = $request->country; // This should be the country for international trips
+            } elseif ($request->trip_type == 'local') {
+                $travel->state = $request->state;
+                $travel->origin = $request->origin;
+                $travel->destination = $request->destination;
             }
-            return redirect()->route('travel.index')->with('success', __('Travel  successfully created.'));
-        }
-        else
-        {
+    
+            $travel->save();
+    
+            // Send email notification if setting is enabled
+            $settings = Utility::settings();
+            if ($settings['trip_sent'] == 1) {
+                $employee = Employee::find($travel->employee_id);
+                $tripArr = [
+                    'trip_name' => $employee->name,
+                    'purpose_of_visit' => $travel->purpose_of_visit,
+                    'start_date' => $travel->start_date,
+                    'end_date' => $travel->end_date,
+                    'country' => $travel->country,
+                    'trip_description' => $travel->description,
+                ];
+    
+                $resp = Utility::sendEmailTemplate('trip_sent', [$employee->id => $employee->email], $tripArr);
+                return redirect()->route('travel.index')->with('success', __('Travel successfully created.') . ((!empty($resp) && $resp['is_success'] == false && !empty($resp['error'])) ? '<br> <span class="text-danger">' . $resp['error'] . '</span>' : ''));
+            }
+    
+            return redirect()->route('travel.index')->with('success', __('Travel successfully created.'));
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
+    
 
     public function show(Travel $travel)
     {
@@ -133,49 +141,65 @@ class TravelController extends Controller
     }
 
     public function update(Request $request, Travel $travel)
-    {
-        if(\Auth::user()->can('edit travel'))
-        {
-            if($travel->created_by == \Auth::user()->creatorId())
-            {
+{
+    if (\Auth::user()->can('edit travel')) {
+        if ($travel->created_by == \Auth::user()->creatorId()) {
 
-                $validator = \Validator::make(
-                    $request->all(), [
-                                       'employee_id' => 'required',
-                                       'start_date' => 'required',
-                                       'end_date' => 'required',
-                                       'purpose_of_visit' => 'required',
-                                       'place_of_visit' => 'required',
-                                   ]
-                );
-                if($validator->fails())
-                {
-                    $messages = $validator->getMessageBag();
+            $rules = [
+                'employee_id' => 'required',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'purpose_of_visit' => 'required',
+            ];
 
-                    return redirect()->back()->with('error', $messages->first());
-                }
-
-                $travel->employee_id      = $request->employee_id;
-                $travel->start_date       = $request->start_date;
-                $travel->end_date         = $request->end_date;
-                $travel->purpose_of_visit = $request->purpose_of_visit;
-                $travel->place_of_visit   = $request->place_of_visit;
-                $travel->description      = $request->description;
-                $travel->save();
-
-                return redirect()->route('travel.index')->with('success', __('Travel successfully updated.'));
+            // Check if country field is present to determine trip type
+            if ($request->has('country') && $request->country) {
+                $rules['country'] = 'required';
+                $tripType = 'international';
+            } else {
+                $rules['state'] = 'required';
+                $rules['origin'] = 'required';
+                $rules['destination'] = 'required';
+                $tripType = 'local';
             }
-            else
-            {
-                return redirect()->back()->with('error', __('Permission denied.'));
+
+            $validator = \Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
             }
-        }
-        else
-        {
+
+            $travel->employee_id = $request->employee_id;
+            $travel->start_date = $request->start_date;
+            $travel->end_date = $request->end_date;
+            $travel->purpose_of_visit = $request->purpose_of_visit;
+            $travel->description = $request->description;
+
+            if ($tripType == 'international') {
+                $travel->country = $request->country;
+                $travel->state = null;
+                $travel->origin = null;
+                $travel->destination = null;
+            } else {
+                $travel->country = null;
+                $travel->state = $request->state;
+                $travel->origin = $request->origin;
+                $travel->destination = $request->destination;
+            }
+
+            $travel->save();
+
+            return redirect()->route('travel.index')->with('success', __('Travel successfully updated.'));
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
+    } else {
+        return redirect()->back()->with('error', __('Permission denied.'));
     }
+}
 
+    
     public function destroy(Travel $travel)
     {
         if(\Auth::user()->can('delete travel'))
