@@ -30,7 +30,7 @@
             </div>
             <div class="form-group col-lg-6 col-md-6">
                 {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
-                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')]) }}
+                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'placeholder' => __('Enter Purpose of Visit')]) }}
             </div>
         </div>
 
@@ -53,7 +53,7 @@
             </div>
             <div class="form-group col-lg-6 col-md-6">
                 {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
-                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')]) }}
+                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'placeholder' => __('Enter Purpose of Visit')]) }}
             </div>
         </div>
        

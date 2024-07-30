@@ -36,7 +36,7 @@
             <div class="form-group col-lg-6 col-md-6">
                 <?php echo e(Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label'])); ?>
 
-                <?php echo e(Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')])); ?>
+                <?php echo e(Form::text('purpose_of_visit', null, ['class' => 'form-control', 'placeholder' => __('Enter Purpose of Visit')])); ?>
 
             </div>
         </div>
@@ -67,7 +67,7 @@
             <div class="form-group col-lg-6 col-md-6">
                 <?php echo e(Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label'])); ?>
 
-                <?php echo e(Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')])); ?>
+                <?php echo e(Form::text('purpose_of_visit', null, ['class' => 'form-control', 'placeholder' => __('Enter Purpose of Visit')])); ?>
 
             </div>
         </div>

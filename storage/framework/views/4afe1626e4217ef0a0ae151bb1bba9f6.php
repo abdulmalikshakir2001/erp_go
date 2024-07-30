@@ -34,33 +34,37 @@
         </div>
     </div>
     
-    <div class="row" id="localTrips" style="<?php echo e($travel->country ? 'display: none;' : ''); ?>">
-        <div class="form-group col-md-6">
-            <?php echo e(Form::label('state', __('State'), ['class' => 'form-label'])); ?>
+    <div class="" id="localTrips" style="<?php echo e($travel->country ? 'display: none;' : ''); ?>">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <?php echo e(Form::label('state', __('State'), ['class' => 'form-label'])); ?>
 
-            <?php echo e(Form::text('state', null, ['class' => 'form-control', 'placeholder' => __('Enter State')])); ?>
+                <?php echo e(Form::text('state', null, ['class' => 'form-control', 'placeholder' => __('Enter State')])); ?>
 
+            </div>
+            <div class="form-group col-md-6">
+                <?php echo e(Form::label('origin', __('Origin'), ['class' => 'form-label'])); ?>
+
+                <?php echo e(Form::text('origin', null, ['class' => 'form-control', 'placeholder' => __('Enter Origin')])); ?>
+
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <?php echo e(Form::label('origin', __('Origin'), ['class' => 'form-label'])); ?>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <?php echo e(Form::label('destination', __('Destination'), ['class' => 'form-label'])); ?>
 
-            <?php echo e(Form::text('origin', null, ['class' => 'form-control', 'placeholder' => __('Enter Origin')])); ?>
+                <?php echo e(Form::text('destination', null, ['class' => 'form-control', 'placeholder' => __('Enter Destination')])); ?>
 
-        </div>
-        <div class="form-group col-md-6">
-            <?php echo e(Form::label('destination', __('Destination'), ['class' => 'form-label'])); ?>
+            </div>
+            <div class="form-group col-md-6">
+                <?php echo e(Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label'])); ?>
 
-            <?php echo e(Form::text('destination', null, ['class' => 'form-control', 'placeholder' => __('Enter Destination')])); ?>
+                <?php echo e(Form::text('purpose_of_visit', null, ['class' => 'form-control','placeholder' => __('Enter Purpose of Visit')])); ?>
 
+            </div>
         </div>
     </div>
 
-    <div class="form-group col-md-12">
-        <?php echo e(Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label'])); ?>
-
-        <?php echo e(Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')])); ?>
-
-    </div>
     
     <div class="row">
         <div class="form-group col-md-6">
