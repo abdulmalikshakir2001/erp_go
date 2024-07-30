@@ -35,6 +35,9 @@
                                 <th>{{__('End Date')}}</th>
                                 <th>{{__('Purpose of Trip')}}</th>
                                 <th>{{__('Country')}}</th>
+                                <th>{{__('State')}}</th>
+                                <th>{{__('Origin')}}</th>
+                                <th>{{__('Destination')}}</th>
                                 <th>{{__('Description')}}</th>
                                 @if(Gate::check('edit travel') || Gate::check('delete travel'))
                                     <th width="200px">{{__('Action')}}</th>
@@ -51,6 +54,9 @@
                                     <td>{{ \Auth::user()->dateFormat( $travel->end_date) }}</td>
                                     <td>{{ $travel->purpose_of_visit }}</td>
                                     <td>{{ $travel->country }}</td>
+                                    <td>{{ $travel->state }}</td>
+                                    <td>{{ $travel->origin }}</td>
+                                    <td>{{ $travel->destination }}</td>
                                     <td>{{ $travel->description }}</td>
                                     @if(Gate::check('edit travel') || Gate::check('delete travel'))
                                         <td>

@@ -36,6 +36,9 @@
                                 <th><?php echo e(__('End Date')); ?></th>
                                 <th><?php echo e(__('Purpose of Trip')); ?></th>
                                 <th><?php echo e(__('Country')); ?></th>
+                                <th><?php echo e(__('State')); ?></th>
+                                <th><?php echo e(__('Origin')); ?></th>
+                                <th><?php echo e(__('Destination')); ?></th>
                                 <th><?php echo e(__('Description')); ?></th>
                                 <?php if(Gate::check('edit travel') || Gate::check('delete travel')): ?>
                                     <th width="200px"><?php echo e(__('Action')); ?></th>
@@ -52,6 +55,9 @@
                                     <td><?php echo e(\Auth::user()->dateFormat( $travel->end_date)); ?></td>
                                     <td><?php echo e($travel->purpose_of_visit); ?></td>
                                     <td><?php echo e($travel->country); ?></td>
+                                    <td><?php echo e($travel->state); ?></td>
+                                    <td><?php echo e($travel->origin); ?></td>
+                                    <td><?php echo e($travel->destination); ?></td>
                                     <td><?php echo e($travel->description); ?></td>
                                     <?php if(Gate::check('edit travel') || Gate::check('delete travel')): ?>
                                         <td>

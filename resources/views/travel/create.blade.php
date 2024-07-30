@@ -14,67 +14,52 @@
     @endif
     {{-- end for ai module --}}
     
-    <div class="form-group col-md-12">
-        {{ Form::label('trip_type', __('Trip Type'), ['class' => 'form-label']) }}
-      <div class="row">
-        <div class="col-md-2">
-            <div class="form-check">
-                {{ Form::radio('trip_type', 'international', false, ['class' => 'form-check-input', 'id' => 'international','required'=>'required', 'onchange' => 'toggleTripFields("international")']) }}
-                {{ Form::label('international', __('International'), ['class' => 'form-check-label']) }}
-            </div>
-           </div>
-           <div class="col-md-2">
-            <div class="form-check">
-                {{ Form::radio('trip_type', 'local', false, ['class' => 'form-check-input', 'id' => 'local','required'=>'required', 'onchange' => 'toggleTripFields("local")']) }}
-                {{ Form::label('local', __('Local'), ['class' => 'form-check-label']) }}
-            </div>
-           </div>
-      </div>
-    </div>
-
+  
     <div class="row">
          <div class="form-group col-md-12">
              {{ Form::label('employee_id', __('Employee'), ['class' => 'form-label']) }}
              {{ Form::select('employee_id', $employees, null, ['class' => 'form-control select', 'required' => 'required']) }}
          </div>
      </div>
-    <div class="row" id="intTrips">
+    <div class="" id="intTrips" style="display: none;">
         <!-- International trip fields -->
         <div class="row">
             <div class="form-group col-md-6">
                 {{ Form::label('place_of_visit', __('Country'), ['class' => 'form-label']) }}
                 {{ Form::text('country', null, ['class' => 'form-control', 'placeholder' => __('Enter Country')]) }}
             </div>
+            <div class="form-group col-lg-6 col-md-6">
+                {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
+                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')]) }}
+            </div>
         </div>
+
     </div>
-    <div class="row" id="localTrips" style="display: none;">
+    <div class="" id="localTrips" >
        <div class="row">
-        <div class="form-group col-md-6" id="state">
-            {{ Form::label('state', __('State'), ['class' => 'form-label']) }}
-            {{ Form::text('state', null, ['class' => 'form-control', 'placeholder' => __('Enter State')]) }}
-        </div>
-        <div class="form-group col-lg-6 col-md-6">
-            {{ Form::label('origin', __('Origin'), ['class' => 'form-label']) }}
-            {{ Form::text('origin', null, ['class' => 'form-control', 'placeholder' => __('Origin')]) }}
-        </div>
+            <div class="form-group col-md-6" id="state">
+                {{ Form::label('state', __('State'), ['class' => 'form-label']) }}
+                {{ Form::text('state', null, ['class' => 'form-control', 'placeholder' => __('Enter State')]) }}
+            </div>
+            <div class="form-group col-lg-6 col-md-6">
+                {{ Form::label('origin', __('Origin'), ['class' => 'form-label']) }}
+                {{ Form::text('origin', null, ['class' => 'form-control', 'placeholder' => __('Origin')]) }}
+            </div>
        </div>
-       
-        
-        <div class="form-group col-md-6" id="state">
-            {{ Form::label('destination', __('Destination'), ['class' => 'form-label']) }}
-            {{ Form::text('destination', null, ['class' => 'form-control', 'placeholder' => __('Destination')]) }}
+       <div class="row">
+            <div class="form-group col-md-6" id="state">
+                {{ Form::label('destination', __('Destination'), ['class' => 'form-label']) }}
+                {{ Form::text('destination', null, ['class' => 'form-control', 'placeholder' => __('Destination')]) }}
+            </div>
+            <div class="form-group col-lg-6 col-md-6">
+                {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
+                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')]) }}
+            </div>
         </div>
-       
        
     </div>
 
 
-    <div class="row">
-        <div class="form-group col-lg-6 col-md-6">
-            {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
-            {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')]) }}
-        </div>
-    </div>
 
     <div class="row">
         <div class="form-group col-lg-6 col-md-6">
@@ -91,6 +76,25 @@
         {{ Form::label('description', __('Description'), ['class' => 'form-label']) }}
         {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __('Enter Description')]) }}
     </div>
+
+    <div class="form-group col-md-12">
+        {{ Form::label('trip_type', __('Trip Type'), ['class' => 'form-label']) }}
+      <div class="row">
+        <div class="col-md-2">
+            <div class="form-check">
+                {{ Form::radio('trip_type', 'international', false, ['class' => 'form-check-input', 'id' => 'international','required'=>'required', 'onchange' => 'toggleTripFields("international")']) }}
+                {{ Form::label('international', __('International'), ['class' => 'form-check-label']) }}
+            </div>
+           </div>
+           <div class="col-md-2">
+            <div class="form-check">
+                {{ Form::radio('trip_type', 'local', false, ['class' => 'form-check-input', 'id' => 'local','required'=>'required','checked' => 'checked', 'onchange' => 'toggleTripFields("local")']) }}
+                {{ Form::label('local', __('Local'), ['class' => 'form-check-label']) }}
+            </div>
+           </div>
+      </div>
+    </div>
+
 
     
 </div>
