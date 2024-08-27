@@ -60,6 +60,7 @@ class LeadController extends Controller
 
             $pipelines = Pipeline::where('created_by', '=', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $users     = User::all();
+           
 
             return view('leads.index', compact('pipelines', 'pipeline','users'));
         }
@@ -320,9 +321,10 @@ class LeadController extends Controller
             }
             $precentage = number_format(($i * 100) / count($stageCnt));
             $users     = User::all();
+            $leadUsers = UserLead::all();
 
 
-            return view('leads.show', compact('lead', 'calenderTasks', 'deal', 'precentage','users'));
+            return view('leads.show', compact('lead', 'calenderTasks', 'deal', 'precentage','users','leadUsers'));
         }
         else
         {
@@ -414,7 +416,7 @@ class LeadController extends Controller
 
                 return redirect()->back()->with('success', __('Lead successfully updated!'));
             }
-            else
+            else 
             {
                 return redirect()->back()->with('error', __('Permission Denied.'));
             }
