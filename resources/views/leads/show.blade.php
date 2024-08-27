@@ -353,6 +353,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-center justify-content-between">
+                                        <div class="col-auto mb-3 mb-sm-0">
+                                            <small class="text-muted">{{__('Meeting Details')}}</small>
+                                            <h5 class="mt-2">Meeting Date: <span>{{$lead->date->format('Y-m-d\ h:i a')}}</span></h5>
+                                            <h5 class="mt-2">Lead Name: <span>{{$lead->name}}</span></h5>
+                                                <h5>User Name: <span>
+                                                @foreach ($users as $user)
+                                                    @if ($user->id == $lead->user_id)
+                                                        {{$user->name}}
+                                                    @endif
+                                                @endforeach    
+                                                </span></h5>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="theme-avtar bg-primary">
+                                                <i class="ti ti-social"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <div id="users_products">

@@ -81,8 +81,9 @@ class DealController extends Controller
             $cnt_deal['this_month']  = Deal::getDealSummary($curr_month);
             $cnt_deal['this_week']   = Deal::getDealSummary($curr_week);
             $cnt_deal['last_30days'] = Deal::getDealSummary($last_30days);
-
-            return view('deals.index', compact('pipelines', 'pipeline', 'cnt_deal'));
+            $clients      = User::where('created_by', '=', \Auth::user()->ownerId())->where('type', 'client')->get()->pluck('name', 'id');
+            $clientDeals = ClientDeal::all();
+            return view('deals.index', compact('pipelines', 'pipeline', 'cnt_deal','clients','clientDeals'));
         }
         else
         {
@@ -145,7 +146,8 @@ class DealController extends Controller
             {
                 $deals = Deal::select('deals.*')->join('user_deals', 'user_deals.deal_id', '=', 'deals.id')->where('user_deals.user_id', '=', $usr->id)->where('deals.pipeline_id', '=', $pipeline->id)->orderBy('deals.order')->get();
             }
-
+            
+            
             return view('deals.list', compact('pipelines', 'pipeline', 'deals', 'cnt_deal'));
         }
         else
@@ -361,7 +363,10 @@ class DealController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Deal $deal)
+    
     {
+
+        
         if($deal->is_active)
         {
             $calenderTasks = [];
@@ -386,8 +391,11 @@ class DealController extends Controller
             $permission        = [];
             $customFields      = CustomField::where('module', '=', 'deal')->get();
             $deal->customField = CustomField::getData($deal, 'deal')->toArray();
-
-            return view('deals.show', compact('deal', 'customFields', 'calenderTasks', 'permission'));
+            
+            $clientDeal = ClientDeal::where('deal_id',$deal->id)->get();
+            $clientInfo = User::where('created_by', '=', \Auth::user()->ownerId())->where('type', 'client')->get();
+            $clients      = User::where('created_by', '=', \Auth::user()->ownerId())->where('type', 'client')->get()->pluck('name', 'id');
+            return view('deals.show', compact('deal', 'customFields','clients','calenderTasks','clientInfo','clientDeal', 'permission'));
         }
         else
         {
@@ -446,37 +454,33 @@ class DealController extends Controller
             {
                 $validator = \Validator::make(
                     $request->all(), [
-                                       'name' => 'required|max:20',
+                                       'name' => 'required|max:150',
                                        'pipeline_id' => 'required',
                                    ]
                 );
-
+    
                 if($validator->fails())
                 {
                     $messages = $validator->getMessageBag();
-
+    
                     return redirect()->back()->with('error', $messages->first());
                 }
-
+    
                 $deal->name  = $request->name;
                 $deal->phone = $request->phone;
-                if(empty($request->price))
-                {
-                    $deal->price = 0;
-                }
-                else
-                {
-                    $deal->price = $request->price;
-                }
+                $deal->price = empty($request->price) ? 0 : $request->price;
                 $deal->pipeline_id = $request->pipeline_id;
                 $deal->stage_id    = $request->stage_id;
-                $deal->sources     = implode(",", array_filter($request->sources));
-                $deal->products    = implode(",", array_filter($request->products));
+    
+                // Handle sources and products
+                $deal->sources     = $request->has('sources') ? implode(",", array_filter($request->sources)) : '';
+                $deal->products    = $request->has('products') ? implode(",", array_filter($request->products)) : '';
+    
                 $deal->notes       = $request->notes;
                 $deal->save();
-
+    
                 CustomField::saveData($deal, $request->customField);
-
+    
                 return redirect()->back()->with('success', __('Deal successfully updated!'));
             }
             else
@@ -489,6 +493,7 @@ class DealController extends Controller
             return redirect()->back()->with('error', __('Permission Denied.'));
         }
     }
+    
 
     /**
      * Remove the specified redeal from storage.

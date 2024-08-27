@@ -620,6 +620,7 @@ Route::post('/deals/{id}/discussions', [DealController::class, 'discussionStore'
 Route::get('/deals/{id}/permission/{cid}', [DealController::class, 'permission'])->name('deals.client.permission')->middleware(['auth', 'XSS']);
 Route::put('/deals/{id}/permission/{cid}', [DealController::class, 'permissionStore'])->name('deals.client.permissions.store')->middleware(['auth', 'XSS']);
 Route::get('/deals/list', [DealController::class, 'deal_list'])->name('deals.list')->middleware(['auth', 'XSS']);
+// Route::get('deals/{id}/{client_id}', [DealController::class, 'showData'])->name('deals.showData');
 
 // Deal Calls
 
@@ -636,7 +637,7 @@ Route::post('/deals/{id}/email', [DealController::class, 'emailStore'])->name('d
 
 
 
-
+ 
 
 Route::resource('deals', DealController::class)->middleware(['auth', 'XSS']);
 // end Deal Module

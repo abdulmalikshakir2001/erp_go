@@ -59,8 +59,9 @@ class LeadController extends Controller
             }
 
             $pipelines = Pipeline::where('created_by', '=', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            $users     = User::all();
 
-            return view('leads.index', compact('pipelines', 'pipeline'));
+            return view('leads.index', compact('pipelines', 'pipeline','users'));
         }
         else
         {
@@ -137,6 +138,7 @@ class LeadController extends Controller
                                    'subject' => 'required',
                                    'name' => 'required',
                                    'email' => 'required',
+                                   'meetingDate' => 'required',
                                ]
             );
 
@@ -179,7 +181,7 @@ class LeadController extends Controller
                 $lead->pipeline_id = $pipeline->id;
                 $lead->stage_id    = $stage->id;
                 $lead->created_by  = $usr->creatorId();
-                $lead->date        = date('Y-m-d');
+                $lead->date        = $request->meetingDate;
                 $lead->save();
 
 
@@ -317,8 +319,10 @@ class LeadController extends Controller
                 }
             }
             $precentage = number_format(($i * 100) / count($stageCnt));
+            $users     = User::all();
 
-            return view('leads.show', compact('lead', 'calenderTasks', 'deal', 'precentage'));
+
+            return view('leads.show', compact('lead', 'calenderTasks', 'deal', 'precentage','users'));
         }
         else
         {
@@ -346,6 +350,7 @@ class LeadController extends Controller
                 $users          = User::where('created_by', '=', \Auth::user()->creatorId())->where('type', '!=', 'client')->where('type', '!=', 'company')->where('id', '!=', \Auth::user()->id)->get()->pluck('name', 'id');
                 $lead->sources  = explode(',', $lead->sources);
                 $lead->products = explode(',', $lead->products);
+                $lead->meeting_datetime = $lead->meetingDate ? $lead->meetingDate->format('Y-m-d\TH:i') : null;
 
                 return view('leads.edit', compact('lead', 'pipelines', 'sources', 'products', 'users'));
             }
@@ -404,6 +409,7 @@ class LeadController extends Controller
                 $lead->sources     = implode(",", array_filter($request->sources));
                 $lead->products    = implode(",", array_filter($request->products));
                 $lead->notes       = $request->notes;
+                $lead->date        = $request->meetingDate;
                 $lead->save();
 
                 return redirect()->back()->with('success', __('Lead successfully updated!'));

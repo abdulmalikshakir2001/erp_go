@@ -15,6 +15,10 @@ File: style.css
    */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
 
+.meetingInfo p{
+    width: 100% !important;
+
+}
 :root {
     --bs-blue: #51459d;
     --bs-indigo: #6610f2;

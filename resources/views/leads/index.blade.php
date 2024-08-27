@@ -70,7 +70,13 @@
         });
     </script>
 @endpush
+<style>
+    .meetingInfo p{
+        width: 100% !important;
 
+    }
+
+</style>
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">{{__('Dashboard')}}</a></li>
     <li class="breadcrumb-item">{{__('Lead')}}</li>
@@ -132,7 +138,7 @@
                                             @endif
                                         </div>
                                         <div class="card-header border-0 pb-0 position-relative">
-                                            <h5><a href="@can('view lead')@if($lead->is_active){{route('leads.show',$lead->id)}}@else#@endif @else#@endcan">{{$lead->name}}</a></h5>
+                                            <h5><a href="@can('view lead')@if($lead->is_active){{route('leads.show',$lead->id)}}@else#@endif @else#@endcan">{{$lead->name}}</a> ({{$lead->subject}})</h5>
                                             <div class="card-header-right">
                                                 @if(Auth::user()->type != 'Client')
                                                     <div class="btn-group card-option">
@@ -166,6 +172,21 @@
                                                         </div>
                                                     </div>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="card-footer m-0 mt-2">
+                                            <div class="row meetingInfo">
+                                                <h5>Meeting Date: <span>{{$lead->date->format('Y-m-d\ H:i')}}</span></h5>
+                                                <h5>User Name: <span>
+                                                @foreach ($users as $user)
+                                                    @if ($user->id == $lead->user_id)
+                                                        {{$user->name}}
+                                                    @endif
+                                                @endforeach    
+                                                </span></h5>
+                                                <div class="col-sm-12">
+                                                     {!! $lead->notes !!}
+                                                </div>
                                             </div>
                                         </div>
                                         <?php

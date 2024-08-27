@@ -21,8 +21,8 @@ class UserController extends Controller
     public function index()
     {
 
-        $user = \Auth::user();
-        if (\Auth::user()->can('manage user')) {
+        $user = Auth::user();
+        if (Auth::user()->can('manage user')) {
             $users = User::where('created_by', '=', $user->creatorId())->whereNotIn('type', ['client','company'])->get();
 
             return view('user.index')->with('users', $users);
