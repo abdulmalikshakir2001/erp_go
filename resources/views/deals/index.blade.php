@@ -72,31 +72,38 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var filterDateInput = document.getElementById('filterDate');
-        
-        if (filterDateInput) {
-            filterDateInput.addEventListener('change', function() {
-                var selectedDate = this.value;
-                var dealCards = document.querySelectorAll('.card[data-id]');
+document.addEventListener('DOMContentLoaded', function() {
+    var filterDateInput = document.getElementById('filterDate');
     
-                dealCards.forEach(function(card) {
-                    var cardDateElement = card.querySelector('.card-footer .row .col-md-6 span');
-                    
-                    if (cardDateElement) {
-                        var cardDate = cardDateElement.innerText.trim();
-                        var formattedCardDate = new Date(cardDate).toISOString().split('T')[0];
-    
-                        if (formattedCardDate === selectedDate || selectedDate === '') {
-                            card.style.display = '';
-                        } else {
-                            card.style.display = 'none';
-                        }
+    if (filterDateInput) {
+        filterDateInput.addEventListener('change', function() {
+            var selectedDate = this.value;
+            var dealCards = document.querySelectorAll('.card[data-id]');
+
+            dealCards.forEach(function(card) {
+                var cardDateElement = card.querySelector('.card-footer .row .col-md-6 span');
+
+                if (cardDateElement) {
+                    var cardDate = cardDateElement.innerText.trim();
+
+                    // Correct formatting for the cardDate without timezone conversion
+                    var cardDateObj = new Date(cardDate);
+                    var formattedCardDate = 
+                        cardDateObj.getFullYear() + '-' + 
+                        ('0' + (cardDateObj.getMonth() + 1)).slice(-2) + '-' + 
+                        ('0' + cardDateObj.getDate()).slice(-2);
+
+                    if (formattedCardDate === selectedDate || selectedDate === '') {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
                     }
-                });
+                }
             });
-        }
-    });
+        });
+    }
+});
+
 
     </script>
 @endpush

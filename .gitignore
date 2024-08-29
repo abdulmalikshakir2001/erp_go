@@ -1,4 +1,3 @@
-
 /.idea
 /.vscode
 /vendor/srmklive/paypal/tests/Mocks/samples/sample2.pdf
@@ -10,7 +9,7 @@ composer.lock
 /storage/framework/sessions/
 /storage/framework/views/
 /storage/uploads/sample/
-/storage/framework/
-
-
-
+# Ignore everything inside storage/framework
+/storage/framework/*
+# But not the framework directory itself
+!/storage/framework/
