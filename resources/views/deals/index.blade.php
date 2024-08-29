@@ -1,3 +1,5 @@
+
+{{-- @dd($clientDeals) --}}
 @extends('layouts.admin')
 @section('page-title')
     {{__('Manage Deals')}} @if($pipeline) - {{$pipeline->name}} @endif
@@ -69,6 +71,34 @@
             $('#change-pipeline').submit();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var filterDateInput = document.getElementById('filterDate');
+        
+        if (filterDateInput) {
+            filterDateInput.addEventListener('change', function() {
+                var selectedDate = this.value;
+                var dealCards = document.querySelectorAll('.card[data-id]');
+    
+                dealCards.forEach(function(card) {
+                    var cardDateElement = card.querySelector('.card-footer .row .col-md-6 span');
+                    
+                    if (cardDateElement) {
+                        var cardDate = cardDateElement.innerText.trim();
+                        var formattedCardDate = new Date(cardDate).toISOString().split('T')[0];
+    
+                        if (formattedCardDate === selectedDate || selectedDate === '') {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        }
+    });
+
+    </script>
 @endpush
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">{{__('Dashboard')}}</a></li>
@@ -96,6 +126,7 @@
 @endsection
 
 @section('content')
+
     <div class="row">
         <div class="col-sm-3">
             <div class="card">
@@ -166,6 +197,12 @@
             </div>
         </div>
     </div>
+    <div class="row m-3">
+        <div class="col-sm-4 ">
+            <label for="filerDate" class="text-bold "><h6>Filter By Date</h6></label>
+            <input type="date" id="filterDate" class="form-control" placeholder="Filter by Date">
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             @php
@@ -201,7 +238,9 @@
                                             @endif
                                         </div>
                                         <div class="card-header border-0 pb-0 position-relative">
-                                            <h5><a href="@can('view deal')@if($deal->is_active){{route('deals.show',$deal->id)}}@else#@endif @else#@endcan">{{$deal->name}}</a></h5>
+                                          
+                                              <h5><a href="@can('view deal')@if($deal->is_active){{route('deals.show',$deal->id)}}@else#@endif @else#@endcan">{{$deal->name}}</a></h5>
+                                            
                                             <div class="card-header-right">
                                                 @if(Auth::user()->type != 'client')
                                                     <div class="btn-group card-option">
@@ -268,6 +307,15 @@
                                                         <img src="@if($user->avatar) {{asset('/storage/uploads/avatar/'.$user->avatar)}} @else {{asset('storage/uploads/avatar/avatar.png')}} @endif" alt="image" data-bs-toggle="tooltip" title="{{$user->name}}">
                                                     @endforeach
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="card-footer px-0 pb-0">
+                                                
+                                                   <div class="row">
+                                                     <div class="col-md-6"><span> {{$deal->created_at->format('d M Y')}}</span></div>
+                                                     <div class="col-md-6 text-end"><span>{{$deal->created_at->format('h:i a')}}</span></div>
+                                                   </div>
+                                             
                                             </div>
                                         </div>
                                     </div>
@@ -281,3 +329,4 @@
         </div>
     </div>
 @endsection
+

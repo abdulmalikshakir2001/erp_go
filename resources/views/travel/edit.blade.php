@@ -28,25 +28,29 @@
         </div>
     </div>
     
-    <div class="row" id="localTrips" style="{{ $travel->country ? 'display: none;' : '' }}">
-        <div class="form-group col-md-6">
-            {{ Form::label('state', __('State'), ['class' => 'form-label']) }}
-            {{ Form::text('state', null, ['class' => 'form-control', 'placeholder' => __('Enter State')]) }}
+    <div class="" id="localTrips" style="{{ $travel->country ? 'display: none;' : '' }}">
+        <div class="row">
+            <div class="form-group col-md-6">
+                {{ Form::label('state', __('State'), ['class' => 'form-label']) }}
+                {{ Form::text('state', null, ['class' => 'form-control', 'placeholder' => __('Enter State')]) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ Form::label('origin', __('Origin'), ['class' => 'form-label']) }}
+                {{ Form::text('origin', null, ['class' => 'form-control', 'placeholder' => __('Enter Origin')]) }}
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            {{ Form::label('origin', __('Origin'), ['class' => 'form-label']) }}
-            {{ Form::text('origin', null, ['class' => 'form-control', 'placeholder' => __('Enter Origin')]) }}
-        </div>
-        <div class="form-group col-md-6">
-            {{ Form::label('destination', __('Destination'), ['class' => 'form-label']) }}
-            {{ Form::text('destination', null, ['class' => 'form-control', 'placeholder' => __('Enter Destination')]) }}
+        <div class="row">
+            <div class="form-group col-md-6">
+                {{ Form::label('destination', __('Destination'), ['class' => 'form-label']) }}
+                {{ Form::text('destination', null, ['class' => 'form-control', 'placeholder' => __('Enter Destination')]) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
+                {{ Form::text('purpose_of_visit', null, ['class' => 'form-control','placeholder' => __('Enter Purpose of Visit')]) }}
+            </div>
         </div>
     </div>
 
-    <div class="form-group col-md-12">
-        {{ Form::label('purpose_of_visit', __('Purpose of Trip'), ['class' => 'form-label']) }}
-        {{ Form::text('purpose_of_visit', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Enter Purpose of Visit')]) }}
-    </div>
     
     <div class="row">
         <div class="form-group col-md-6">

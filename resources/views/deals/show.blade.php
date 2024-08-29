@@ -1,3 +1,4 @@
+{{-- @dd($clientDeal) --}}
 @extends('layouts.admin')
 @section('page-title')
     {{$deal->name}}
@@ -214,6 +215,28 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-6 offset-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto mb-3 mb-sm-0">
+                                    <h4 class="m-0 mb-2" style="display: inline-block">Client Info</h4>
+                                    @foreach ($clientInfo as $clientInfo) 
+                                        @foreach ($clientDeal as $clientDeals)
+                                            @if ($clientInfo->id == $clientDeals->client_id)
+                                                <p class="m-0"><span>Name: </span>{{ $clientInfo->name }}</p>
+                                                <p><span>Email: </span>{{ $clientInfo->email }}</p>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xl-3">
                     <div class="card sticky-top" style="top:30px">

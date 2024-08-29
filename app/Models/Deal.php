@@ -82,7 +82,7 @@ class Deal extends Model
     {
         if($this->products)
         {
-            return ProductService::whereIn('id', explode(',', $this->products))->get();
+            return ProductService::whereIn('id', explode(',', $this->products))->orderBy('id','desc')->get();
         }
 
         return [];
@@ -92,7 +92,7 @@ class Deal extends Model
     {
         if($this->sources)
         {
-            return Source::whereIn('id', explode(',', $this->sources))->get();
+            return Source::whereIn('id', explode(',', $this->sources))->orderBy('id','desc')->get();
         }
 
         return [];

@@ -23,6 +23,9 @@ class Lead extends Model
         'date',
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
     public function labels()
     {
         if($this->labels)
@@ -62,7 +65,7 @@ class Lead extends Model
     {
         if($this->sources)
         {
-            return Source::whereIn('id', explode(',', $this->sources))->get();
+            return Source::whereIn('id', explode(',', $this->sources))->orderBy('id','desc')->get();
         }
 
         return [];

@@ -57,7 +57,7 @@ class TravelController extends Controller
                     'trip_type' => 'required|in:international,local',
                     'employee_id' => 'required',
                     'start_date' => 'date',
-                    'purpose_of_visit' => 'required|string',
+                    'purpose_of_visit' => 'nullable',
                     'end_date' => 'date|after_or_equal:start_date',
                     'description' => 'nullable',
                     'country' => 'required_if:trip_type,international',

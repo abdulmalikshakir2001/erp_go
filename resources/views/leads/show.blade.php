@@ -173,6 +173,7 @@
 @endsection
 
 @section('content')
+{{-- @dd($leadUsers) --}}
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -347,6 +348,51 @@
                                         <div class="col-auto">
                                             <div class="theme-avtar bg-warning">
                                                 <i class="ti ti-file"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-center justify-content-between">
+                                        <div class="col-auto mb-3 mb-sm-0">
+                                            <small class="text-muted">{{__('Meeting Details')}}</small>
+                                            <div>
+                                                <h6 class="mt-2 d-inline-block">Meeting Date: </h6><span class="text-muted"> {{$lead->date->format('d M Y')}}</span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mt-0 d-inline-block">Meeting Time: </h6><span class="text-muted"> {{$lead->date->format('h:i a')}}</span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mt-0 d-inline-block">Lead Name: </h6><span class="text-muted"> {{$lead->name}}</span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mt-0 d-inline-block">Meeting Members:</h6>
+                                                <span class="text-muted">
+                                                    @foreach($leadUsers as $leadUser)
+                                                      @if ($leadUser->lead_id == $lead->id)
+                                                        @foreach ($users as $user)
+                                                            @if ($user->id == $leadUser->user_id)
+                                                                {{$user->name}}
+                                                                @php
+                                                                    echo ","
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach 
+                                                      @endif 
+                                                    @endforeach    
+                                                </span>
+                                            
+                                            </div>
+
+                                            
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="theme-avtar bg-primary">
+                                                <i class="ti ti-social"></i>
                                             </div>
                                         </div>
                                     </div>

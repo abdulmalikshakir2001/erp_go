@@ -31,7 +31,7 @@ class CreateLeadsTable extends Migration
             $table->integer('created_by');
             $table->integer('is_active')->default(1);
             $table->integer('is_converted')->default(0);
-            $table->date('date')->nullable();
+            $table->datetime('date')->nullable();
             $table->timestamps();
         }
         );

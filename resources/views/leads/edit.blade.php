@@ -42,6 +42,10 @@
             {{ Form::label('stage_id', __('Stage'),['class'=>'form-label']) }}<span class="text-danger">*</span>
             {{ Form::select('stage_id', [''=>__('Select Stage')],null, array('class' => 'form-control select','required'=>'required')) }}
         </div>
+        <div class="col-6 form-group">
+            {{ Form::label('meetingDate', __('Meeting Date'), ['class' => 'form-label']) }}
+            {{ Form::input('datetime-local', 'meetingDate', $lead->meeting_datetime, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Select Date')]) }}
+        </div>        
         <div class="col-12 form-group">
             {{ Form::label('sources', __('Sources'),['class'=>'form-label']) }}<span class="text-danger">*</span>
             {{ Form::select('sources[]', $sources,null, array('class' => 'form-control select2','id'=>'choices-multiple1','multiple'=>'','required'=>'required')) }}

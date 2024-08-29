@@ -39,6 +39,10 @@
             {{ Form::label('phone', __('Phone'),['class'=>'form-label']) }}
             {{ Form::text('phone', null, array('class' => 'form-control','required'=>'required' , 'placeholder' => __('Enter Phone'))) }}
         </div>
+        <div class="col-6 form-group">
+            {{ Form::label('Meeting Date', __('Meeting Date'),['class'=>'form-label']) }}
+            {{ Form::input('datetime-local','meetingDate', null, array('class' => 'form-control','required'=>'required' , 'placeholder' => __('Select Date'))) }}
+        </div>
     </div>
 </div>
 

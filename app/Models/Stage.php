@@ -10,11 +10,23 @@ class Stage extends Model
         'name','pipeline_id','created_by','order'
     ];
 
-    public function deals(){
-        if(\Auth::user()->type == 'client'){
-            return Deal::select('deals.*')->join('client_deals','client_deals.deal_id','=','deals.id')->where('client_deals.client_id', '=', \Auth::user()->id)->where('deals.stage_id', '=', $this->id)->orderBy('deals.order')->get();
-        }else {
-            return Deal::select('deals.*')->join('user_deals', 'user_deals.deal_id', '=', 'deals.id')->where('user_deals.user_id', '=', \Auth::user()->id)->where('deals.stage_id', '=', $this->id)->orderBy('deals.order')->get();
+    public function deals()
+    {
+        if (\Auth::user()->type == 'client') {
+            return Deal::select('deals.*')
+                ->join('client_deals', 'client_deals.deal_id', '=', 'deals.id')
+                ->where('client_deals.client_id', '=', \Auth::user()->id)
+                ->where('deals.stage_id', '=', $this->id)
+                ->orderBy('deals.created_at', 'desc')  // Order by created_at in descending order
+                ->get();
+        } else {
+            return Deal::select('deals.*')
+                ->join('user_deals', 'user_deals.deal_id', '=', 'deals.id')
+                ->where('user_deals.user_id', '=', \Auth::user()->id)
+                ->where('deals.stage_id', '=', $this->id)
+                ->orderBy('deals.created_at', 'desc')  // Order by created_at in descending order
+                ->get();
         }
     }
+    
 }

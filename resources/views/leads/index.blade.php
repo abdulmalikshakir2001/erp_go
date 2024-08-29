@@ -70,7 +70,13 @@
         });
     </script>
 @endpush
+<style>
+    .meetingInfo p{
+        width: 100% !important;
 
+    }
+
+</style>
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">{{__('Dashboard')}}</a></li>
     <li class="breadcrumb-item">{{__('Lead')}}</li>
@@ -168,6 +174,7 @@
                                                 @endif
                                             </div>
                                         </div>
+                                       
                                         <?php
                                         $products = $lead->products();
                                         $sources = $lead->sources();
