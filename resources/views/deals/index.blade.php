@@ -127,7 +127,23 @@
 
 @section('content')
 
+     <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-11 mb-3 mb-sm-0">
+                            <label for="filerDate" class="text-bold "><h6>Filter By Date</h6></label>
+                            <input type="date" id="filterDate" class="form-control" placeholder="Filter by Date">
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
     <div class="row">
+       
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
@@ -197,12 +213,7 @@
             </div>
         </div>
     </div>
-    <div class="row m-3">
-        <div class="col-sm-4 ">
-            <label for="filerDate" class="text-bold "><h6>Filter By Date</h6></label>
-            <input type="date" id="filterDate" class="form-control" placeholder="Filter by Date">
-        </div>
-    </div>
+    
     <div class="row">
         <div class="col-sm-12">
             @php

@@ -167,8 +167,6 @@
                                                                 </a>
                                                                 {!! Form::close() !!}
                                                             @endcan
-
-
                                                         </div>
                                                     </div>
                                                 @endif

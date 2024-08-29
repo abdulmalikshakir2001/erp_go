@@ -198,7 +198,7 @@ class UserController extends Controller
     public function destroy($id)
     {
 
-        if (\Auth::user()->can('delete user')) {
+        if (Auth::user()->can('delete user')) {
             $user = User::find($id);
             if ($user) {
                 if (\Auth::user()->type == 'company') {
