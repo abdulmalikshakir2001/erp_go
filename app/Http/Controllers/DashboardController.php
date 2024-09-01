@@ -167,7 +167,9 @@ class DashboardController extends Controller
                 if ($setting['display_landing_page'] == 'on' && \Schema::hasTable('landing_page_settings'))
                 {
 
-                    return view('landingpage::layouts.landingpage', compact('setting'));
+                    // return view('landingpage::layouts.landingpage', compact('setting'));
+                    return redirect('login');
+
                 }
                 else
                 {
